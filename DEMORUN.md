@@ -19,6 +19,7 @@ Two short stories with the same mistake (lodash 4.17.11), covering the JFrog req
 
 * create two tokens and set the names in .env
 * check examples at https://jfrogkmm.jfrog.io/ui/admin/configuration/security/access_tokens
+
 | desrciption example | .env variable    | volker's name | comment                        |
 | ------------------- | ---------------- | ------------- | ------------------------------ |
 | voko-admin          | SERVER_ID        | gsoft         | currently only used by AI      |
@@ -66,14 +67,14 @@ jf config add gsoft-user --url https://jfrogkmm.jfrog.io
 
 | Step         | Do                                                            | Where  | Comments                  |
 | ------------ | ------------------------------------------------------------- | ------ | ------------------------- |
-| FL-01        | enable blocking `sbin/set-policy-block.sh true`               | shell  | or use the jfrog web UI   |
+| FL-01        | enable blocking `sbin/set-policy-block2.sh true`               | shell  | or use the jfrog web UI to rescam the artifact   |
 | FL-02        | `git switch main; git pull ; git checkout -b demo/fail-left`  | shell  |                           |
 | FL-03        | introduce the vul again                                       | IDE    |                           |
 | FL-04        | `npm install; git commit -am "done it again/left" ; git push` | shell  |                           |
-| FL-05        | see the build fail directly                                   | github | currently NOT failing!!   |
+| FL-05        | see the build fail directly                                   | github | should fail               |
 | INTERMISSION | ------ below is not reproduced yet, seel also TODO-01 ------- |        |                           |
-| FL-07        | run a change/PR in gsoft-demo-consumer                        | IDE    | shows OIDC reuse          |
-| FL-08        | see the build being scanned using the action and OIDC         | github | ? with vul or without ? |
+| FL-07        | run a change/PR in `gsoft-demo-consumer`                        | IDE    | shows OIDC reuse          |
+| FL-08        | see the build being scanned using the action and OIDC         | github | without vul |
 
 ## FINDINGS
 
@@ -81,12 +82,12 @@ jf config add gsoft-user --url https://jfrogkmm.jfrog.io
 
 curious behaviour, depending on the direction of the switch. Please try to reproduce
 
-**blocked --> not blocked**: refreshing the XRay page for the artifact will clear the blockage
-**non-blocked --> blocked**: refreshing has no effect, a rescan is required, then the block works
+* **blocked --> not blocked**: refreshing the XRay page for the artifact will clear the blockage
+* **non-blocked --> blocked**: refreshing has no effect, a rescan is required, then the block works
 
 ## TODOs
 
 | ID      | What                                                                  | Status |
 | ------- | --------------------------------------------------------------------- | ------ |
 | TODO-01 | make gsoft-demo-consumer also start the build upon push automatically | new    |
-| TODO-02 |                                                                       |        |
+
